@@ -33,7 +33,7 @@ class Journal
     Entry newentry;
     //get ts = timestamp
     newentry.set_values(title, ts, text);
-    entries[newentry] = password;
+    entries.insert ( std::pair<Entry,string>(newentry,password) );
   }
   
   void create_user(string password)
@@ -45,7 +45,18 @@ class Journal
   
   string search_time(string time)
   {
+    Entry match;
     // loops through map searching for match
+    for (it=mymap.begin(); it!=mymap.end(); ++it) {
+      if (it.get_time() == time) {
+        match.set_values(it.get_title(),it.get_timestamp(),it.get_text())
+        std::cout << it->first << " => " << it->second << '\n'
+      }
+    }
+    // if match != NULL && password = password
+    // {
+      
+    // }
     // prompt password if found
     // return text if match
   }
