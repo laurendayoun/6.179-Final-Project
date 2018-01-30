@@ -27,6 +27,30 @@ class Journal
   {
     
   } 
+
+  string get_timestamp(){
+    time_t rawtime;
+    struct tm * timeinfo;
+
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+    return asctime (timeinfo);
+  }
+
+  string get_month_year(string timeinfo)
+  {
+    //return month and year as one string
+  }
+
+  string get_year(string timeinfo)
+  {
+    // return year as one string
+  }
+
+  string get_dayofweek(timeinfo)
+  {
+    //return day of week
+  }
   
   void create_entry(string title, string text, string password)
   {
