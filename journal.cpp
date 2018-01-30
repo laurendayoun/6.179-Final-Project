@@ -49,7 +49,7 @@ class Journal
     // prompt password if found
     // return text if match
   }
-  
+
   string search_title(string title)
   {
     // loops through map searching for match
@@ -60,7 +60,26 @@ class Journal
   void return_entries(string password)
   {
     for(entry e : entries){
-      
+      if(entries[e] == password;)
+      {
+        cout << e.get_title();
+      }
     }
+  }
+
+  void return_year(string year)
+  {
+    //print entries from year
+  }
+
+  void return_month(string month, string year)
+  {
+    //print entries from specific month and year
+  }
+  
+  void return_day_of_week(string dayofweek)
+  {
+    // loops through map searching for match
+    //if fount print entry title
   }
 }
