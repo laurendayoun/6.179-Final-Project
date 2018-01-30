@@ -3,9 +3,21 @@
 #include <time.h>
 #include <string>
 
-class Entry(string title, string time, string text)
+class Entry(string title, string timestamp, string text)
 {
-  
+  string title, timestamp, text;
+  public:
+    void set_values(string, string, string);
+    string get_title(){return title;}
+    string get_time(){return timestamp;}
+    string get_text(){return text;}
+  }
+}
+
+void Entry::set_values(string t1, string ts, string tx){
+  title = t1;
+  timestamp = ts;
+  text = tx;
 }
 
 class Journal
@@ -18,14 +30,17 @@ class Journal
   
   void create_entry(string title, string text, string password)
   {
-    // create an Entry object
-    // gets timestamp --> string
-    // add to the map
+    Entry newentry;
+    //get ts = timestamp
+    newentry.set_values(title, ts, text);
+    entries[newentry] = password;
   }
   
   void create_user(string password)
   {
-    // makes new entry
+    //prompt desired password
+    //prompt title, text
+    create_entry(title, text, password)
   }
   
   string search_time(string time)
@@ -44,6 +59,8 @@ class Journal
   
   void return_entries(string password)
   {
-    // loop through and if password matches, print title
+    for(entry e : entries){
+      
+    }
   }
 }
