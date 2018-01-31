@@ -59,7 +59,7 @@ class Journal
           char search_by;
           std::cout << "Type 't' to search by title, or 'd' to search by date.";
           std::cin >> search_by;
-          while (search_by != 't' && payrollType != 'd')
+          while (search_by != 't' && search_by != 'd')
           {
               std::cout << "Invalid input, please enter 't' or 'd'.\n";
               std::cin >> search_by;
