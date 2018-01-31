@@ -99,7 +99,7 @@ class Journal
 
   string get_month(string timeinfo)
   {
-    std::string month = timeinfo.subsrt(4, 3);
+    std::string month = timeinfo.substr(4, 3);
     return month;
   }
 
@@ -118,15 +118,20 @@ class Journal
   void create_entry(string title, string text, string password)
   {
     Entry newentry;
-    //get ts = timestamp
+    std::string ts = get_timestamp();
     newentry.set_values(title, ts, text);
     entries.insert ( std::pair<Entry,string>(newentry,password) );
   }
   
-  void create_user(string password)
+  void create_user()
   {
-    //prompt desired password
-    //prompt title, text
+    std::str password, title, text;
+    cout << "What would you like your password to be? \n";
+    cin >> password;
+    cout << "Please enter the title of your new entry.";
+    cin >> title;
+    cout << "Please enter your text:";
+    cin >> text;
     create_entry(title, text, password)
   }
   
@@ -160,7 +165,7 @@ class Journal
     for(entry e : entries){
       if(entries[e] == password;)
       {
-        cout << e.get_title();
+        cout << e.get_title() << "\n";
       }
     }
   }
