@@ -26,10 +26,13 @@ class Journal
     
   int main(int argc, char *argv[])
   {
+      char returning;
+      cout << "Are you a returning user? Type 'y' or 'n':";
+      cin >> returning;
       string input;
       cout << "Please enter your password:";
       cin >> input;
-      //if (pass != passwor) check if the string is same as password: if not, return
+      //if (pass != password) check if the string is same as password: if not, return
       
       char task;
       cout << "What would you like to do today?\n";
@@ -43,13 +46,13 @@ class Journal
       
       if (task == 'e')
       {
-          string title;
-          string text;
+          std::string title;
+          std::string text;
           
           cout << "Please enter the title of your new entry.";
-          cin >> title;
+          std::cin >> title;
           cout << "Please enter your text:";
-          cin >> text;
+          std::cin >> text;
           create_entry(title,text,input);
       }
       else
@@ -72,15 +75,13 @@ class Journal
           }
           else
           {
-              char day;
-              char month;
-              char year;
+              std::string day,month,year;
               cout << "Day (press enter if unsure):";
-              cin >> day;
+              std::cin >> day;
               cout << "Month (press enter if unsure):";
-              cin >> month;
+              std::cin >> month.substr(0,3);
               cout << "Year (press enter if unsure):";
-              cin >> year;
+              std::cin >> year;
               search_time(day,month,year);
           }
       }
