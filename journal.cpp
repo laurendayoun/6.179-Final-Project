@@ -3,18 +3,18 @@
 #include <time.h>
 #include <string>
 
-class Entry(string title, string timestamp, string text)
+class Entry(std::string title, std::string timestamp, std::string text)
 {
-  string title, timestamp, text;
+  std::string title, timestamp, text;
   public:
-    void set_values(string, string, string);
+    void set_values(std::string, std::string, std::string);
     string get_title(){return title;}
     string get_time(){return timestamp;}
     string get_text(){return text;}
   }
 }
 
-void Entry::set_values(string t1, string ts, string tx){
+void Entry::set_values(std::string t1, std::string ts, std::string tx){
   title = t1;
   timestamp = ts;
   text = tx;
@@ -27,21 +27,21 @@ class Journal
   int main(int argc, char *argv[])
   {
       char returning;
-      cout << "Are you a returning user? Type 'y' or 'n':";
-      cin >> returning;
-      string input;
-      cout << "Please enter your password:";
-      cin >> input;
+      std::cout << "Are you a returning user? Type 'y' or 'n':";
+      std::cin >> returning;
+      std::string input;
+      std::cout << "Please enter your password:";
+      std::cin >> input;
       //if (pass != password) check if the string is same as password: if not, return
       
       char task;
-      cout << "What would you like to do today?\n";
-      cout << "Type 'e' to start a new entry, or type 's' to search the existing entries.";
-      cin >> task;
+      std::cout << "What would you like to do today?\n";
+      std::cout << "Type 'e' to start a new entry, or type 's' to search the existing entries.";
+      std::cin >> task;
       while (task != 'e' && task != 's')
       {
-          cout << "Invalid input, please enter 'e' or 's'.\n"
-          cin >> task;
+          std::cout << "Invalid input, please enter 'e' or 's'.\n"
+          std::cin >> task;
       }
       
       if (task == 'e')
@@ -49,38 +49,38 @@ class Journal
           std::string title;
           std::string text;
           
-          cout << "Please enter the title of your new entry.";
+          std::cout << "Please enter the title of your new entry.";
           std::cin >> title;
-          cout << "Please enter your text:";
+          std::cout << "Please enter your text:";
           std::cin >> text;
           create_entry(title,text,input);
       }
       else
       {
           char search_by;
-          cout << "Type 't' to search by title, or 'd' to search by date."
-          cin >> search_by;
+          std::cout << "Type 't' to search by title, or 'd' to search by date."
+          std::cin >> search_by;
           while (search_by != 't' && payrollType != 'd')
           {
-              cout << "Invalid input, please enter 't' or 'd'.\n";
-              cin >> search_by;
+              std::cout << "Invalid input, please enter 't' or 'd'.\n";
+              std::cin >> search_by;
           }
           
           if (search_by == 't')
           {
               char key;
-              cout << "Search titles by term:";
-              cin >> key;
+              std::cout << "Search titles by term:";
+              std::cin >> key;
               search_title(key);
           }
           else
           {
               std::string day,month,year;
-              cout << "Day (press enter if unsure):";
+              std::cout << "Day (press enter if unsure):";
               std::cin >> day;
-              cout << "Month (press enter if unsure):";
+              std::cout << "Month (press enter if unsure):";
               std::cin >> month.substr(0,3);
-              cout << "Year (press enter if unsure):";
+              std::cout << "Year (press enter if unsure):";
               std::cin >> year;
               search_time(day,month,year);
           }
@@ -98,25 +98,25 @@ class Journal
 
   //Format: Wed Feb 13 15:46:11 2013
 
-  string get_month(string timeinfo)
+  string get_month(std::string timeinfo)
   {
     std::string month = timeinfo.substr(4, 3);
     return month;
   }
 
-  string get_year(string timeinfo)
+  string get_year(std::string timeinfo)
   {
     std::string year = timeinfo.substr(-4, 4);
     return year;
   }
 
-  string get_dayofweek(timeinfo)
+  string get_dayofweek(std::string timeinfo)
   {
     std::string day = timeinfo.substr(0, 3);
     return day;
   }
   
-  void create_entry(string title, string text, string password)
+  void create_entry(std::string title, std::string text, std::string password)
   {
     Entry newentry;
     std::string ts = get_timestamp();
@@ -127,16 +127,16 @@ class Journal
   void create_user()
   {
     std::str password, title, text;
-    cout << "What would you like your password to be? \n";
-    cin >> password;
-    cout << "Please enter the title of your new entry.";
-    cin >> title;
-    cout << "Please enter your text:";
-    cin >> text;
+    std::cout << "What would you like your password to be? \n";
+    std::cin >> password;
+    std::cout << "Please enter the title of your new entry.";
+    std::cin >> title;
+    std::cout << "Please enter your text:";
+    std::cin >> text;
     create_entry(title, text, password)
   }
   
-  string search_time(string time)
+  string search_time(std::string time)
   {
     Entry match;
     // loops through map searching for match
@@ -154,14 +154,14 @@ class Journal
     // return text if match
   }
 
-  string search_title(string title)
+  string search_title(std::string title)
   {
     // loops through map searching for match
     // prompt password if found
     // return text if match
   }
   
-  void return_entries(string password)
+  void return_entries(std::string password)
   {
     for(entry e : entries){
       if(entries[e] == password;)
@@ -171,12 +171,12 @@ class Journal
     }
   }
 
-  void return_year(string year)
+  void return_year(std::string year)
   {
     //print entries from year
   }
 
-  void return_month(string month, string year)
+  void return_month(std::string month, std::string year)
   {
     //print entries from specific month and year
   }
