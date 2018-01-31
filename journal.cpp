@@ -37,19 +37,23 @@ class Journal
     return asctime (timeinfo);
   }
 
-  string get_month_year(string timeinfo)
+  //Format: Wed Feb 13 15:46:11 2013
+
+  string get_month(string timeinfo)
   {
-    //return month and year as one string
+    std::string month = timeinfo.subsrt(4, 3);
+    return month;
   }
 
   string get_year(string timeinfo)
   {
-    // return year as one string
+    std::string year = timeinfo.substr(-4, 4);
   }
 
   string get_dayofweek(timeinfo)
   {
-    //return day of week
+    std::string day = timeinfo.substr(0, 3);
+    return day;
   }
   
   void create_entry(string title, string text, string password)
