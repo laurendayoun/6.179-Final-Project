@@ -48,6 +48,7 @@ class Journal
   string get_year(string timeinfo)
   {
     std::string year = timeinfo.substr(-4, 4);
+    return year;
   }
 
   string get_dayofweek(timeinfo)
@@ -120,5 +121,10 @@ class Journal
   {
     // loops through map searching for match
     //if fount print entry title
+  }
+
+  void print_text(Entry e)
+  {
+    cout << e.get_text();
   }
 }
