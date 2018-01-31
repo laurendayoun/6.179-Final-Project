@@ -23,9 +23,67 @@ void Entry::set_values(string t1, string ts, string tx){
 class Journal
 {
   std::map<Entry, string> entries;
+    
   int main(int argc, char *argv[])
   {
-    
+      string input;
+      cout << "Please enter your password:";
+      cin >> input;
+      //if (pass != passwor) check if the string is same as password: if not, return
+      
+      char task;
+      cout << "What would you like to do today?\n";
+      cout << "Type 'e' to start a new entry, or type 's' to search the existing entries.";
+      cin >> task;
+      while (task != 'e' && task != 's')
+      {
+          cout << "Invalid input, please enter 'e' or 's'.\n"
+          cin >> task;
+      }
+      
+      if (task == 'e')
+      {
+          string title;
+          string text;
+          
+          cout << "Please enter the title of your new entry.";
+          cin >> title;
+          cout << "Please enter your text:";
+          cin >> text;
+          create_entry(title,text,input);
+      }
+      else
+      {
+          char search_by;
+          cout << "Type 't' to search by title, or 'd' to search by date."
+          cin >> search_by;
+          while (search_by != 't' && payrollType != 'd')
+          {
+              cout << "Invalid input, please enter 't' or 'd'.\n";
+              cin >> search_by;
+          }
+          
+          if (search_by == 't')
+          {
+              char key;
+              cout << "Search titles by term:";
+              cin >> key;
+              search_title(key);
+          }
+          else
+          {
+              char day;
+              char month;
+              char year;
+              cout << "Day (press enter if unsure):";
+              cin >> day;
+              cout << "Month (press enter if unsure):";
+              cin >> month;
+              cout << "Year (press enter if unsure):";
+              cin >> year;
+              search_time(day,month,year);
+          }
+      }
   } 
 
   string get_timestamp(){
