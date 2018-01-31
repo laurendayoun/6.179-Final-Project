@@ -12,7 +12,7 @@ class Entry(string title, string timestamp, string text)
     string get_time(){return timestamp;}
     string get_text(){return text;}
   }
-}
+};
 
 void Entry::set_values(string t1, string ts, string tx){
   title = t1;
