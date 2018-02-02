@@ -35,8 +35,9 @@ class Entry
             return m_title;
         }
 
-        string getTime(){
-        return m_timestamp;
+        string getTime()
+        {
+            return m_timestamp;
         }
 
         string getText(){

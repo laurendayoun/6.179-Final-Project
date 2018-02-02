@@ -44,7 +44,7 @@ class Journal
             create_entry(title, text, password);
         }
         
-        string search_time(string ttime)  
+        void search_time(string ttime)  
         {
         // loops through map searching for match
             bool istrue = false;
@@ -62,7 +62,7 @@ class Journal
             }
         }
 
-        string search_title(string title)
+        void search_title(string title)
         {
             bool istrue = false;
             for (map<Entry, string>::iterator iter = entries.begin(); iter!= entries.end(); ++iter)
