@@ -113,22 +113,12 @@ class Journal {
 };
 
 int main() {
-    string user = "Grg";
+    string user = "Default";
     Journal diary(user);
-    // cout << "What would you like to do today?"
-    // diary.addEntry("Finding Nemo", "Once upon a time...");
-    // cout << diary.numEntries() << endl;
-    // diary.printEntries();
-    
-    // cout << diary.numEntries() << endl;
-    // if (diary.searchTitle("Finding Nemo"))
-    //     cout << "Found"<< endl;
-    // else
-    //     cout << "Not found" << endl;
 
     char task;
     cout << "What would you like to do today?\n";
-    cout << "Type 'e' to start a new entry, type 's' to search the existing entries, or type 'd' to delete an existing entry.";
+    cout << "Type 'e' to start a new entry, type 's' to search the existing entries, or type 'd' to delete an existing entry.\n";
     cin >> task;
     while (task != 'e' && task != 's' && task != 'd')
     {
@@ -147,19 +137,23 @@ int main() {
         cin >> timest;
         cout << "Please enter your desired password for this entry. \n";
         cin >> pasw;
+
         diary.addEntry(title,text,timest,pasw);
+        cout << "New entry added!";
     }  
     else if(task == 'd')
     {
         string title;
         cout << "Please enter the title of the entry you want to delete.\n";
         cin >> title;
+        cout << diary.searchTitle(title);
         diary.deleteEntry(title);
+        cout << "Entry deleted.";
     }
     else
     {
         char search_by;
-        cout << "Type 't' to search by title, or 'd' to search by date.";
+        cout << "Type 't' to search by title, or 'd' to search by date.\n";
         cin >> search_by;
         while (search_by != 't' && search_by != 'd')
         {
@@ -170,7 +164,7 @@ int main() {
         if (search_by == 't')
         {
             string key;
-            cout << "Search by title:";
+            cout << "Search by title: ";
             cin >> key;
             if (diary.searchTitle(key))
             {
@@ -211,9 +205,6 @@ int main() {
             }
         }
   }
-
-
-
     return 0;
     
 }
