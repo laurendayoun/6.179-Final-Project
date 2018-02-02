@@ -3,192 +3,235 @@
 #include <time.h>
 #include <string>
 
+using namespace std;
+
 class Entry
 {
-  std::string title, timestamp, text;
-  public:
-    void set_values(std::string, std::string, std::string);
-    std::string get_title(){return title;}
-    std::string get_time(){return timestamp;}
-    std::string get_text(){return text;}
+	public: 
+		Entry(string title, string timestamp, string text);
+		string getTitle();
+		string getTime();
+		string getText();
+		string get_month();
+		string get_year();
+    string get_dayofweek();
+    string get_day();
+	private:
+		string m_title;
+		string m_timestamp;
+		string m_text;
 };
 
-void Entry::set_values(std::string t1, std::string ts, std::string tx){
-  title = t1;
-  timestamp = ts;
-  text = tx;
+Entry::Entry(string title, string timestamp, string text) {
+	m_title = title;
+	m_timestamp = timestamp;
+	m_text = text;
+}
+
+string Entry::getTitle() {
+	return m_title;
+}
+
+string Entry::getTime(){
+  return m_timestamp;
+}
+
+string Entry::getText(){
+  return m_text;
+}
+
+string Entry::get_month()
+{
+  return m_timestamp.substr(4,3);
+}
+
+string Entry::get_year()
+{
+  return m_timestamp.substr(-4, 4);
+}
+
+string Entry::get_dayofweek()
+{
+  return m_timestamp.substr(0, 3);
+}
+
+string Entry::get_day()
+{
+  return m_timestamp.substr(8,2);
 }
 
 class Journal
 {
-  std::map<Entry, std::string> entries;
-    
-  int main(int argc, char *argv[])
-  {
-      char returning;
-      std::cout << "Are you a returning user? Type 'y' or 'n':";
-      std::cin >> returning;
-      std::string input;
-      std::cout << "Please enter your password:";
-      std::cin >> input;
-      //if (pass != password) check if the string is same as password: if not, return
-      
-      char task;
-      std::cout << "What would you like to do today?\n";
-      std::cout << "Type 'e' to start a new entry, or type 's' to search the existing entries.";
-      std::cin >> task;
-      while (task != 'e' && task != 's')
-      {
-          std::cout << "Invalid input, please enter 'e' or 's'.\n";
-          std::cin >> task;
-      }
-      
-      if (task == 'e')
-      {
-          std::string title;
-          std::string text;
-          
-          std::cout << "Please enter the title of your new entry.";
-          std::cin >> title;
-          std::cout << "Please enter your text:";
-          std::cin >> text;
-          Journal::create_entry(title,text,input);
-      }
-      else
-      {
-          char search_by;
-          std::cout << "Type 't' to search by title, or 'd' to search by date.";
-          std::cin >> search_by;
-          while (search_by != 't' && search_by != 'd')
-          {
-              std::cout << "Invalid input, please enter 't' or 'd'.\n";
-              std::cin >> search_by;
-          }
-          
-          if (search_by == 't')
-          {
-              char key;
-              std::cout << "Search titles by term:";
-              std::cin >> key;
-              Journal::search_title(key);
-          }
-          else
-          {
-              std::string day,month,year;
-              std::cout << "Day (press enter if unsure):";
-              std::cin >> day;
-              std::cout << "Month (press enter if unsure):";
-              std::cin >> month.substr(0,3);
-              std::cout << "Year (press enter if unsure):";
-              std::cin >> year;
-              Journal::search_time(day,month,year);
-          }
-      }
-  } 
+  public: 
+	  Journal(map<Entry, string> entries);
+		string get_timestamp();
+    void create_entry(string, string, string);
+    void create_user();
+    string search_time(string, string, string);
+    string search_title(string);
+    void return_entries(string);
+    void return_year(string);
+    void return_month(string, string);
+    void return_day_of_week(string);
+    void print_text(Entry);
+  private:
+    map<Entry, string> entries;
+};
 
-  std::string get_timestamp() const
-  {
-    time_t rawtime;
-    struct tm * timeinfo;
+Journal::Journal(map<Entry, string> m)
+{
+  entries = m;
+}
 
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
-    return asctime (timeinfo);
-  }
+//Format: Wed Feb 13 15:46:11 2013
+string Journal::get_timestamp()
+{
+  time_t rawtime;
+  struct tm * timeinfo;
+  time ( &rawtime );
+  timeinfo = localtime ( &rawtime );
+  return asctime (timeinfo);
+}
 
-  //Format: Wed Feb 13 15:46:11 2013
-
-  std::string get_month(std::string timeinfo) const
-  {
-    std::string month = timeinfo.substr(4, 3);
-    return month;
-  }
-
-  std::string get_year(std::string timeinfo) const
-  {
-    std::string year = timeinfo.substr(-4, 4);
-    return year;
-  }
-
-  std::string get_dayofweek(std::string timeinfo) const
-  {
-    std::string day = timeinfo.substr(0, 3);
-    return day;
-  }
+void Journal::create_entry(string title, string text, string password)
+{
+  string ts = get_timestamp();
+  Entry newentry = Entry(title, ts, text);
+  entries.insert ( pair<Entry, string>(newentry,password) );
+}
   
-  void create_entry(std::string title, std::string text, std::string password)
-  {
-    Entry newentry;
-    std::string ts = get_timestamp();
-    newentry.set_values(title, ts, text);
-    entries.insert ( std::pair<Entry, std::string>(newentry,password) );
-  }
+void Journal::create_user()
+{
+  string password, title, text;
+  cout << "What would you like your password to be? \n";
+  cin >> password;
+  cout << "Please enter the title of your new entry.";
+  cin >> title;
+  cout << "Please enter your text:";
+  cin >> text;
+  create_entry(title, text, password);
+}
   
-  void create_user()
+string Journal::search_time(string day, string month, string year)  
+{
+  // loops through map searching for match
+  for (map<Entry, string>::iterator iter = entries.begin(); iter!= entries.end(); ++iter)
   {
-    std::string password, title, text;
-    std::cout << "What would you like your password to be? \n";
-    std::cin >> password;
-    std::cout << "Please enter the title of your new entry.";
-    std::cin >> title;
-    std::cout << "Please enter your text:";
-    std::cin >> text;
-    create_entry(title, text, password);
-  }
-  
-  std::string search_time(std::string time) const
-  {
-    Entry match;
-    // loops through map searching for match
-    for (int it=entries.begin(); it!=entries.end(); ++it) {
-      if (it.get_time() == time) {
-        match.set_values(it.get_title(),it.get_timestamp(),it.get_text())
-        std::cout << it->first << " => " << it->second << '\n'
-      }
+    Entry e = iter->first;
+    if (e.get_month() == month && e.get_year() == year && e.get_day() == day) {
+      cout << e.getTitle();
     }
+  }
     // if match != NULL && password = password
     // {
       
     // }
     // prompt password if found
     // return text if match
-  }
+}
 
-  std::string search_title(std::string title) const
-  {
-    // loops through map searching for match
-    // prompt password if found
-    // return text if match
-  }
+string Journal::search_title(string title)
+{
+  // loops through map searching for match
+  // prompt password if found
+  // return text if match
+}
   
-  void return_entries(std::string password) const
+void Journal::return_entries(string password)
+{
+  for(map<Entry, string>::iterator iter = entries.begin(); iter!= entries.end(); ++iter)
   {
-    for(Entry e : entries){
-      if(entries[e] == password)
-      {
-        std::cout << e.get_title() << "\n";
-      }
+    Entry e = iter->first;
+    if(entries[e] == password)
+    {
+      cout << e.getTitle() << "\n";
     }
-  };
-
-  void return_year(std::string year) const
-  {
-    //print entries from year
   }
+}
 
-  void return_month(std::string month, std::string year) const
-  {
-    //print entries from specific month and year
-  }
+void Journal::return_year(string year)
+{
+  //print entries from year
+}
+
+void Journal::return_month(string month, string year)
+{
+  //print entries from specific month and year
+}
   
-  void return_day_of_week(std::string dayofweek) const
-  {
-    // loops through map searching for match
-    //if fount print entry title
-  }
+void Journal::return_day_of_week(string dayofweek)
+{
+  // loops through map searching for match
+  //if fount print entry title
+}
 
-  void print_text(Entry e) const
+void Journal::print_text(Entry e)
+{
+  cout << e.getText();
+}
+
+int main(int argc, char *argv[])
+{
+  map<Entry, string> m;
+  Journal J(m);
+  char returning;
+  cout << "Are you a returning user? Type 'y' or 'n':";
+  cin >> returning;
+  //string input;
+  //cout << "Please enter your password:";
+  //cin >> input;
+  //if(pass != password) check if the string is same as password: if not, return
+  char task;
+  cout << "What would you like to do today?\n";
+  cout << "Type 'e' to start a new entry, or type 's' to search the existing entries.";
+  cin >> task;
+  while (task != 'e' && task != 's')
   {
-    std::cout << e.get_text();
+    cout << "Invalid input, please enter 'e' or 's'.\n";
+    cin >> task;
   }
-};
+    
+  if (task == 'e')
+  {
+    string title;
+    string text;
+          
+    cout << "Please enter the title of your new entry.";
+    cin >> title;
+    cout << "Please enter your text:";
+    cin >> text;
+    J.create_entry(title,text,text);
+  }  
+  else
+  {
+    char search_by;
+    cout << "Type 't' to search by title, or 'd' to search by date.";
+    cin >> search_by;
+    while (search_by != 't' && search_by != 'd')
+    {
+      cout << "Invalid input, please enter 't' or 'd'.\n";
+      cin >> search_by;
+    }
+        
+    if (search_by == 't')
+    {
+      string key;
+      cout << "Search titles by term:";
+      cin >> key;
+      J.search_title(key);
+    }
+    else
+    {
+      string day,month,year;
+      cout << "Day (press enter if unsure):";
+      cin >> day;
+      cout << "Month (press enter if unsure):";
+      cin >> month;
+      month = month.substr(0, 3);
+      cout << "Year (press enter if unsure):";
+      cin >> year;
+
+      J.search_time(day,month,year);
+    }
+  }
+}
