@@ -2,10 +2,11 @@
 #include <map>
 #include <time.h>
 #include <string>
-#include <Entry>
-#include <Journal>
+#include "Entry.cpp"
+#include "Journal.cpp"
 
 using namespace std;
+
 
 int main(int argc, char *argv[])
 {
