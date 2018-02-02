@@ -2,7 +2,6 @@
 #include <map>
 #include <time.h>
 #include <string>
-#include "Entry.cpp"
 #include "Journal.cpp"
 
 using namespace std;
