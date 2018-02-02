@@ -132,13 +132,25 @@ int main() {
         if (task == 'e')
         {
             string title, text, timest, pasw;   
+            
             cout << "Please enter the title of your new entry.\n";
-            cin >> title;
+            cin.ignore();
+            std::getline (std::cin,title);
+            // cin >> title;
+            
             cout << "Please enter your text:\n";
-            cin >> text;
-            cout << "Please enter the date in Month-Day-Year format. No dashes, only spaces.\n";
-            cin >> timest;
-            cout << "Please enter your desired password for this entry. \n";
+            //cin.ignore();
+            std::getline (std::cin,text);
+            //cin >> text;
+            
+            cout << "Please enter the date in Month-Day-Year format. No spaces, only dashes.\n";
+            //cin.ignore();
+            std::getline (std::cin,timest);
+            // cin >> timest;
+            
+            cout << "Please enter your desired password for this entry (no spaces). \n";
+            //cin.ignore();
+            //std::getline (std::cin,pasw);
             cin >> pasw;
     
             diary.addEntry(title,text,timest,pasw);
@@ -148,10 +160,14 @@ int main() {
         {
             string title;
             cout << "Please enter the title of the entry you want to delete.\n";
-            cin >> title;
+            cin.ignore();
+            std::getline (std::cin,title);
+            //cin >> title;
+            
             cout << diary.searchTitle(title);
+            cout << "\n";
             diary.deleteEntry(title);
-            cout << "Entry deleted.";
+            cout << "Entry deleted. \n";
         }
         else if (task == 's')
         {
@@ -167,8 +183,10 @@ int main() {
             if (search_by == 't')
             {
                 string key;
-                cout << "Search by title: ";
-                cin >> key;
+                cout << "Search by title: \n";
+                cin.ignore();
+                std::getline (std::cin,key);
+                //cin >> key;
                 if (diary.searchTitle(key))
                 {
                     int i = diary.searchNumTitle(key);
@@ -180,7 +198,10 @@ int main() {
                         cout<< "Incorrect password, please try again.\n";
                         cin >> pswd;
                     }
+                    cout << "Here is your entry:\n";
                     cout << diary.getText(i);
+                    cout << "\n";
+                    
                 }
     
                 else
@@ -192,7 +213,9 @@ int main() {
             {
                 string monthdayyear;
                 cout << "Please enter the day you are looking for in Month-Day-Year format:\n";
-                cin >> monthdayyear;
+                cin.ignore();
+                std::getline (std::cin,monthdayyear);
+
                 if(diary.searchTime(monthdayyear))
                 {
                     int i = diary.searchNumTime(monthdayyear);
@@ -205,6 +228,7 @@ int main() {
                         cin >> pswd;
                     }
                     cout << diary.getText(i);
+                    cout << "\n";
                 }
             }
       }
