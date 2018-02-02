@@ -112,99 +112,123 @@ class Journal {
     
 };
 
-int main() {
+int main() 
+{
     string user = "Default";
     Journal diary(user);
-
-    char task;
-    cout << "What would you like to do today?\n";
-    cout << "Type 'e' to start a new entry, type 's' to search the existing entries, or type 'd' to delete an existing entry.\n";
-    cin >> task;
-    while (task != 'e' && task != 's' && task != 'd')
+    bool dontquit = true;
+    while (dontquit)
     {
-      cout << "Invalid input, please enter 'e', 'd', or 's'.\n";
-      cin >> task;
-    }
-    
-    if (task == 'e')
-    {
-        string title, text, timest, pasw;   
-        cout << "Please enter the title of your new entry.\n";
-        cin >> title;
-        cout << "Please enter your text:\n";
-        cin >> text;
-        cout << "Please enter the date in Month-Day-Year format. No dashes, only spaces.\n";
-        cin >> timest;
-        cout << "Please enter your desired password for this entry. \n";
-        cin >> pasw;
-
-        diary.addEntry(title,text,timest,pasw);
-        cout << "New entry added!";
-    }  
-    else if(task == 'd')
-    {
-        string title;
-        cout << "Please enter the title of the entry you want to delete.\n";
-        cin >> title;
-        cout << diary.searchTitle(title);
-        diary.deleteEntry(title);
-        cout << "Entry deleted.";
-    }
-    else
-    {
-        char search_by;
-        cout << "Type 't' to search by title, or 'd' to search by date.\n";
-        cin >> search_by;
-        while (search_by != 't' && search_by != 'd')
+        string task;
+        cout << "What would you like to do today?\n";
+        cout << "Type 'e' to start a new entry, type 's' to search the existing entries, or type 'd' to delete an existing entry.\n";
+        getline(cin, task);
+        while (task != "e" && task != "s" && task != "d")
         {
-            cout << "Invalid input, please enter 't' or 'd'.\n";
-            cin >> search_by;
+            cout << "Invalid input, please enter 'e', 'd', or 's'.\n";
+            getline(cin, task);
         }
         
-        if (search_by == 't')
+        if (task == "e")
         {
-            string key;
-            cout << "Search by title: ";
-            cin >> key;
-            if (diary.searchTitle(key))
-            {
-                int i = diary.searchNumTitle(key);
-                string pswd;
-                cout << "What is your password?\n";
-                cin >> pswd;
-                while(diary.getPassword(i) != pswd)
-                {
-                    cout<< "Incorrect password, please try again.\n";
-                    cin >> pswd;
-                }
-                cout << diary.getText(i);
-            }
+            string title, text, timest, pasw;   
+            cout << "Please enter the title of your new entry.\n";
+            getline(cin, title);
+            cout << "Please enter your text:\n";
+            getline(cin, title);
+            cout << "Please enter the date in Month-Day-Year format. No dashes, only spaces.\n";
+            getline(cin, title);
+            cout << "Please enter your desired password for this entry. \n";
+            getline(cin, pasw);
 
-            else
+            diary.addEntry(title,text,timest,pasw);
+            cout << "New entry added!\n";
+        }  
+        else if(task == "d")
+        {
+            string title;
+            cout << "Please enter the title of the entry you want to delete.\n";
+            getline(cin, title);
+            if(diary.searchTitle(title))
             {
-                cout << "Not found" << endl;
+                diary.deleteEntry(title);
+                cout << "Entry deleted.\n";
+            }
+            else{
+                cout << "No such entry exists.\n";
             }
         }
         else
         {
-            string monthdayyear;
-            cout << "Please enter the day you are looking for in Month-Day-Year format:\n";
-            cin >> monthdayyear;
-            if(diary.searchTime(monthdayyear))
+            string search_by;
+            cout << "Type 't' to search by title, or 'd' to search by date.\n";
+            getline(cin, search_by);
+            while (search_by != "t" && search_by != "d")
             {
-                int i = diary.searchNumTime(monthdayyear);
-                string pswd;
-                cout << "What is your password?\n";
-                cin >> pswd;
-                while (diary.getPassword(i) != pswd)
-                {
-                    cout<< "Incorrect password, please try again.\n";
-                    cin >> pswd;
-                }
-                cout << diary.getText(i);
+                cout << "Invalid input, please enter 't' or 'd'.\n";
+                getline(cin, search_by);
             }
+            
+            if (search_by == "t")
+            {
+                string key;
+                cout << "Search by title: ";
+                getline(cin, key);
+                if (diary.searchTitle(key))
+                {
+                    int i = diary.searchNumTitle(key);
+                    string pswd;
+                    cout << "What is your password?\n";
+                    getline(cin, pswd);
+                    while(diary.getPassword(i) != pswd)
+                    {
+                        cout<< "Incorrect password, please try again.\n";
+                        getline(cin, pswd);
+                    }
+                    cout << diary.getText(i);
+                }
+
+                else
+                {
+                    cout << "Not found" << endl;
+                }
+            }
+            else
+            {
+                string monthdayyear;
+                cout << "Please enter the day you are looking for in Month-Day-Year format:\n";
+                getline(cin, monthdayyear);
+                if(diary.searchTime(monthdayyear))
+                {
+                    int i = diary.searchNumTime(monthdayyear);
+                    string pswd;
+                    cout << "What is your password?\n";
+                    getline(cin, pswd);
+                    while (diary.getPassword(i) != pswd)
+                    {
+                        cout<< "Incorrect password, please try again.\n";
+                        getline(cin, pswd);
+                    }
+                    cout << diary.getText(i);
+                }
+
+                else
+                {
+                    cout << "Not found" << endl;
+                }
+            }
+
+            
         }
-  }
+        string contorno;
+        cout << "Would you like to quit? If so, enter 'q'. Otherwise, enter 'c'.\n";
+        getline(cin, contorno);
+        if (contorno == "q")
+        {
+            dontquit = false;
+        }
+    }
+    
     return 0;
     
 }
